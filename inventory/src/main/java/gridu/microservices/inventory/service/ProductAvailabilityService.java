@@ -1,5 +1,9 @@
 package gridu.microservices.inventory.service;
 
+import gridu.microservices.inventory.model.ProductAvailability;
+
 public interface ProductAvailabilityService {
-    Integer getNumberById(String id);
+    Boolean getAvailabilityById(String id);
+
+    ProductAvailability save(ProductAvailability productAvailability);
 }

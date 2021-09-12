@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class InventoryController {
     private final ProductAvailabilityService service;
 
-    @GetMapping("/id/{id}")
-    public ResponseEntity<Integer> getProduct(@PathVariable String id) {
-        return ResponseEntity.ok(service.getNumberById(id));
+    @GetMapping("/{id}")
+    public ResponseEntity<Boolean> getProduct(@PathVariable String id) {
+        return ResponseEntity.ok(service.getAvailabilityById(id));
     }
 }

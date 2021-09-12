@@ -1,5 +1,6 @@
 package gridu.microservices.inventory.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,9 +12,10 @@ import javax.persistence.Table;
 @Table
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class ProductAvailability {
     @Id
     private String uniqId;
 
-    private Integer number;
+    private Boolean availability;
 }

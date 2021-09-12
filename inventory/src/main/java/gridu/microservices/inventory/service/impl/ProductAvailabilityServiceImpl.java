@@ -16,13 +16,18 @@ public class ProductAvailabilityServiceImpl implements ProductAvailabilityServic
     private final ProductAvailabilityRepository repository;
 
     @Override
-    public Integer getNumberById(String id) {
+    public Boolean getAvailabilityById(String id) {
         Optional<ProductAvailability> productAvailability = repository.findById(id);
         if (productAvailability.isPresent()) {
-            return productAvailability.get().getNumber();
+            return productAvailability.get().getAvailability();
         } else {
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, "Product not found");
         }
+    }
+
+    @Override
+    public ProductAvailability save(ProductAvailability productAvailability) {
+        return repository.save(productAvailability);
     }
 }

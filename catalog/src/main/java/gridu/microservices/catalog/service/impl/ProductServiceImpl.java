@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -14,17 +15,13 @@ public class ProductServiceImpl implements ProductService {
     private final ProductRepository repository;
 
     @Override
-    public Product getById(String id) {
-        return repository.findById(id).get();
+    public Optional<Product> getById(String id) {
+
+        return repository.findById(id);
     }
 
     @Override
-    public Collection<Product> getBySku(String sku) {
-        return repository.getProductsBySku(sku);
-    }
-
-    @Override
-    public Collection<Product> getAll() {
-        return repository.findAll();
+    public Optional<Collection<Product>> getBySku(String sku) {
+        return Optional.ofNullable(repository.getProductsBySku(sku));
     }
 }

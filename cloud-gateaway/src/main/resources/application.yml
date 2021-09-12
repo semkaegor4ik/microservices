@@ -1,0 +1,52 @@
+server:
+  port: 8100
+
+spring:
+  application:
+    name: API-GATEWAY
+  cloud:
+    config:
+      enabled: false
+    gateway:
+      routes:
+        - id: CATALOG
+          uri: lb://CATALOG
+          predicates:
+            - Path=/catalog/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: CATALOG
+                fallbackuri: forward:/catalogFallBack
+        - id: INVENTORY
+          uri: lb://INVENTORY
+          predicates:
+            - Path=/inventory/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: INVENTORY
+                fallbackuri: forward:/inventoryFallBack
+        - id: PRODUCT
+          uri: lb://PRODUCT
+          predicates:
+            - Path=/product/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: PRODUCT
+                fallbackuri: forward:/productFallBack
+
+hystrix:
+  command:
+    fallbackcmd:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 5000
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: hystrix.stream

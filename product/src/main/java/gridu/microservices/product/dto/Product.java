@@ -1,4 +1,4 @@
-package gridu.microservices.inventory.dto;
+package gridu.microservices.product.dto;
 
 import lombok.Data;
 

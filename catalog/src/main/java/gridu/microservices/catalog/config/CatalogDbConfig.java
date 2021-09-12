@@ -1,4 +1,4 @@
-package gridu.microservices.catalog.h2configuration;
+package gridu.microservices.catalog.config;
 
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,7 +12,7 @@ import java.sql.Statement;
 
 @Component
 @Setter
-public class CreateTable {
+public class CatalogDbConfig {
     @Value(value = "${spring.datasource.driverClassName}")
     private String driverDB;
 
@@ -29,16 +29,13 @@ public class CreateTable {
     private String filePath;
 
     @EventListener(value = ContextRefreshedEvent.class)
-    public void creatrProductDB() throws Exception {
-        Connection conn = null;
-        Statement stmt = null;
-
+    public void creatrProductTable() throws Exception {
         Class.forName(driverDB);
-        conn = DriverManager.getConnection(urlDB, userDB, passwordDb);
-        stmt = conn.createStatement();
+        Connection connection = DriverManager.getConnection(urlDB, userDB, passwordDb);
+        Statement statement = connection.createStatement();
 
-        stmt.executeUpdate("CREATE TABLE PRODUCT AS SELECT * FROM CSVREAD('" + filePath + "');");
+        statement.executeUpdate("CREATE TABLE PRODUCT AS SELECT * FROM CSVREAD('" + filePath + "');");
 
-        stmt.close();
+        statement.close();
     }
 }
